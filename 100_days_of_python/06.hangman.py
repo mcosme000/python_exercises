@@ -1,37 +1,37 @@
 import random
+import words_list
+import hangman_art
 
-words_list = ["aardvark", "baboon", "camel", "pancake", "courtain", "counter"]
+word = random.choice(words_list.word_list)
 
-word = random.choice(words_list)
-placeholder = ""
+placeholder = []
 
-for letter in word:
-    placeholder += "_"
+for _ in word: placeholder.append("_")
 
-placeholder_array = list(placeholder)
-print(f"The word you need to guess has {len(placeholder_array)} letters:\n {''.join(placeholder_array)}")
+print(f"The hidden word has {len(placeholder)} letters:\n{' '.join(placeholder)}")
 
 tries = 0
 
-while ("_" in placeholder_array and tries < 8):
-    print(f'There are still {placeholder_array.count("_")} letters left')
-    letter = input("Guess a letter: \n").lower()
-    letter_included = letter in word
+while ("_" in placeholder and tries <= 6):
+    letter = input("Guess a letter: ").lower()
+    for index, let in enumerate(word):
+        if let == letter:
+            placeholder[index] = letter.upper()
 
-    if letter_included:
-        print(f'The letter {letter.upper()} is in the word!')
-        for index, let in enumerate(word):
-            if let == letter:
-                placeholder_array[index] = letter.upper()
-    else:
-        print(f'The letter {letter.upper()} is not included in the word... Keep trying!')
-
-    print(''.join(placeholder_array))
+    print(' '.join(placeholder))
     tries += 1
-    if tries > 1: print(f'You have {8 - tries} tries left!')
+    if tries >= 1:
+        print(f'{hangman_art.stages[-tries]}\n')
 
 print("Game finised!")
-if ("_" in placeholder_array):
-    print("You lost!")
+
+if ("_" in placeholder):
+    print(f"You lost! The word was {word}")
 else:
     print(f'Congratulations! You guessed the word! \n{word.upper()}')
+
+
+"""
+Other way of doing this is to create end_of_game = False
+if "_" not in placeholder: end_of_game = True
+"""
