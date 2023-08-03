@@ -1,42 +1,39 @@
-"""
-Welcome to the Number Guessing Game!
-I'm thinking of a number between 1 and 100.
-"""
-
 import random
+
+EASY_LEVEL_TURNS = 10
+HARD_LEVEL_TURNS = 5
 
 numbers = list(range(1, 101))
 rand_number = random.choice(numbers)
+print(f"##Debugging: {rand_number}")
 
-difficulty = input("Choose a difficulty. Type 'easy' or 'hard':\n")
-choice = int(input("* * * Guess a number * * *\n"))
-is_playing = True
+def set_difficulty():
+    difficulty = input("Choose a difficulty. Type 'easy' or 'hard':\n")
+    if difficulty == 'easy':
+        return EASY_LEVEL_TURNS
+    else:
+        return HARD_LEVEL_TURNS
 
-if difficulty == 'easy':
-    tries = 10
-else:
-    tries = 5
-
-def create_message(choice):
+def check_answer(choice):
     difference = abs(rand_number - choice)
-    if rand_number > choice and difference > 10: return "Too low"
+    if rand_number == choice: return "YOU WON!!"
+    elif rand_number > choice and difference > 10: return "Too low"
     elif rand_number > choice and difference <= 10: return "Low, but close"
     elif rand_number < choice and difference > 10: return "Too high"
     elif rand_number < choice and difference <= 10: return "High, but close"
 
-print(f"##Debugging: {rand_number}")
+tries = set_difficulty()
+choice = int(input("* * * Guess a number * * *\n"))
+message = check_answer(choice)
+print(message)
 
-while is_playing:
-    if choice == rand_number:
-        print("You won!")
-        is_playing = False
+while not choice == rand_number:
+    tries -= 1
+    if tries == 0:
+        print("You ran out of tries, you lost")
+        break
     else:
-        tries -= 1
-        if tries == 0:
-            print("You ran out of tries, you lost")
-            is_playing = False
-        else:
-            message = create_message(choice)
-            print(message)
-            print(f"You have {tries} tries left\n")
-            choice = int(input("* * * Guess a number * * * \n"))
+        choice = int(input("* * * Guess a number * * * \n"))
+        message = check_answer(choice)
+        print(message)
+        print(f"You have {tries} tries left\n")
