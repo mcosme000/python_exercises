@@ -1,12 +1,12 @@
 import random
 
-
 import higher_lower_data
 score = 0
 game = True
 a = random.choice(higher_lower_data.data)
 
 def compare(guess):
+    """compare followers and return a boolean"""
     global a, b
     if guess == "a":
         return a['follower_count'] > b['follower_count']
@@ -15,8 +15,8 @@ def compare(guess):
             a = b
             return True
 
-
 def check_answer(guess):
+    """checks answer and decides if continue game or not"""
     global score, game
     answer = compare(guess)
     if answer:
@@ -26,7 +26,6 @@ def check_answer(guess):
         print("We are sorry, you lost")
         print(f"You scored {score} points!")
         game = False
-
 
 while game:
     b = random.choice(higher_lower_data.data)
