@@ -1,4 +1,4 @@
-## Some of the things I am doing with Python ✨
+# Some of the things I am doing with Python ✨
 
-# Random walk, fireworks and geometric shapes generator
+### Random walk, fireworks and geometric shapes generator
 <img src="./media/turtle-graphics.png">
